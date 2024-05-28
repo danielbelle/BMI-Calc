@@ -1,14 +1,31 @@
 
 import './App.css';
 
-function App() {
+export default function App() {
   return (
     <div className="app">
-      <header className="App-header">
-        <span>Hello from App</span>
+      <header className="container">
+        <h2 className='center'>BMI Calculator</h2>
+        <form>
+          <div>
+            <label>Weight (kg):</label>
+            <input type='text' placeholder='Your weight (kg)' />
+          </div>
+          <div>
+            <label>Height (cm):</label>
+            <input type='text' placeholder='Your height (cm)' />
+          </div>
+          <div>
+            <Button>Submit</Button>
+            <Button className='btn-outline'>Reload</Button>
+          </div>
+        </form>
+        <h2 className='center'>Your BMI is:</h2>
       </header>
     </div>
   );
 }
 
-export default App;
+function Button({ children, className }) {
+  return <button className={`btn ${className}`}>{children}</button>
+}
