@@ -4,9 +4,18 @@ import './App.css';
 
 export default function App() {
   const [bmiResult, setBmiResult] = useState()
+  const [bmiMessage, setBmiMessage] = useState()
 
   function handleCalcBMI(value) {
     setBmiResult(value)
+    console.log(value)
+    if (value < 18.4) {
+      setBmiMessage('You are underweight')
+    } else if (value >= 18.5 && value < 24.9) {
+      setBmiMessage('You are a healthy weight')
+    } else {
+      setBmiMessage('You are overweight')
+    }
   }
 
   function handleReload() {
@@ -23,7 +32,7 @@ export default function App() {
         <Button className='btn-outline' onClick={handleReload}>Reload</Button>
 
         <ShowResult result={bmiResult}>Your BMI is:</ShowResult>
-        <ShowResult>And you are:</ShowResult>
+        <ShowResult result={bmiMessage}>And you are:</ShowResult>
       </header>
     </div>
   );
@@ -38,8 +47,10 @@ function FormCalcBMI({ onCalcBMI }) {
     e.preventDefault()
 
     if (!weight || !height) return onCalcBMI("missing info")
+    const BMI = (weight * 10000 / (height * height)).toFixed(2)
 
-    onCalcBMI(Math.round(weight * 10000 / (height * height)).toFixed(2))
+    if (BMI > 50) return onCalcBMI("Wrong infos")
+    onCalcBMI(BMI)
   }
 
   return (
@@ -57,7 +68,12 @@ function FormCalcBMI({ onCalcBMI }) {
 }
 
 function ShowResult({ children, result }) {
-  return (<h2 className='center'>{children} {result}</h2>)
+  return (
+    <>
+      <h2 className='center'>{children}</h2>
+      <p className='center'>{result}</p>
+    </>
+  )
 }
 
 
